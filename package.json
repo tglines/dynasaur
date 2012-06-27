@@ -1,0 +1,16 @@
+{
+  "author": "Travis Glines <travisglines@gmail.com> (http://www.travisglines.com)",
+  "name": "dynasaur",
+  "description": "DynamoDB ORM for Node.js",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tglines/dynasaur.git"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
