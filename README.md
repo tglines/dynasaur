@@ -9,7 +9,7 @@ For now it provides a simple way to interact with DynamoDB and create/read rows 
 
 For Example, here I save a blog post:
 
-`
+```coffeescript
 aws_credentials = {accessKeyId:'your_aws_key', secretAccessKey:'your_aws_secret'}
 
 Dynasaur = require './lib/Dynasaur'
@@ -24,6 +24,6 @@ blog_post.body = 'Dynasaur is a DynamoDB ORM that builds some neat features on t
 blog_post.date = new Date()
 blog_post.save (err,data) ->
   console.log err
-`
+```
 
 
