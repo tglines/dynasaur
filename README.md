@@ -57,8 +57,15 @@ blog_post.save (err,data) ->
 ```
 
 
+## Stuff to come
+
+* Periodic (user defined time) backups to S3
+* Multi-indexing to allow one data type to be indexed via multiple keys (we'll use DynamoDB's strong consistency and data replication here)
+* Elastic Map Reduce (so you can run SQL like queries over the data sets you store)
+
+
 ## Shoulders it stands on
 
 A big thanks go out to Jed Schmidt and other contributors for [dynamo](https://github.com/jed/dynamo) which sits as an API abstraction for DynamoDB that made this process significantly easier.
 
-Another big thanks go out to all the contributors of [mongoose](https://github.com/LearnBoost/mongoose) as it was a huge inspiration to the design of how users interact with the project
+Another big thanks go out to all the contributors of [mongoose](https://github.com/LearnBoost/mongoose) as it was a huge inspiration to the design of how users interact with the project.
