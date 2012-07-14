@@ -7,7 +7,29 @@ It aims to provide a few added features that most people will want from a Dynamo
 
 For now it provides a simple way to interact with DynamoDB and create/read rows in the table.  More features coming.
 
-For Example, here I save a blog post:
+
+## An Example
+
+### Defining a Model
+
+
+```coffeescript
+module.exports = (dynasaur) ->
+
+  blog_post_schema =
+    attributes:
+      author: String
+      title: String
+      body: String
+      date: Number
+    index: [{type:'hash',field:'author'}, {type:'range',fields:['title','date']}]
+
+  BlogPost = dynasaur.model 'BlogPost', blog_post_schema
+```
+
+
+
+### Saving the blog post
 
 First make sure that the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` shell variables are set to their respective values.
 
@@ -35,3 +57,8 @@ blog_post.save (err,data) ->
 ```
 
 
+## Shoulders it stands on
+
+A big thanks go out to Jed Schmidt and other contributors for [dynamo](https://github.com/jed/dynamo) which sits as an API abstraction for DynamoDB that made this process significantly easier.
+
+Another big thanks go out to all the contributors of [mongoose](https://github.com/LearnBoost/mongoose) as it was a huge inspiration to the design of how users interact with the project
