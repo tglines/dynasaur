@@ -1,7 +1,13 @@
-aws_credentials = {accessKeyId:'your_aws_key', secretAccessKey:'your_aws_secret'}
+aws_settings = {
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  },
+  region:'us-west-1'
+}
 
-Dynasaur = require './lib/Dynasaur'
-dynasaur = new Dynasaur aws_credentials
+Dynasaur = require '../../lib/Dynasaur'
+dynasaur = new Dynasaur aws_settings
 
 BlogPost = require('./models/BlogPost')(dynasaur)
 

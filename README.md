@@ -9,11 +9,19 @@ For now it provides a simple way to interact with DynamoDB and create/read rows 
 
 For Example, here I save a blog post:
 
-`
-aws_credentials = {accessKeyId:'your_aws_key', secretAccessKey:'your_aws_secret'}
+First make sure that the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` shell variables are set to their respective values.
 
-Dynasaur = require './lib/Dynasaur'
-dynasaur = new Dynasaur aws_credentials
+```
+aws_settings = {
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  },
+  region:'us-west-1'
+}
+
+Dynasaur = require '../../lib/Dynasaur'
+dynasaur = new Dynasaur aws_settings
 
 BlogPost = require('./models/BlogPost')(dynasaur)
 
@@ -24,6 +32,6 @@ blog_post.body = 'Dynasaur is a DynamoDB ORM that builds some neat features on t
 blog_post.date = new Date()
 blog_post.save (err,data) ->
   console.log err
-`
+```
 
 
