@@ -11,7 +11,7 @@ For Example, here I save a blog post:
 
 First make sure that the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` shell variables are set to their respective values.
 
-```
+```coffeescript
 aws_settings = {
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
