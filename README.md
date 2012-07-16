@@ -75,7 +75,7 @@ Another big thanks go out to all the contributors of [mongoose](https://github.c
 
 (The MIT License)
 
-Copyright (c) 2011 Guillermo Rauch &lt;guillermo@learnboost.com&gt;
+Copyright (c) 2012 Travis Glines &lt;travisglines [->] gmail.com &gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
