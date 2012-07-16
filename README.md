@@ -53,11 +53,24 @@ blog_post = BlogPost.new()
 blog_post.title = 'Dynasaur'
 blog_post.author = 'Someone'
 blog_post.body = 'Dynasaur is a DynamoDB ORM that builds some neat features on top of DynamoDB'
-blog_post.date = new Date()
+blog_post.date = new Date().getTime()
 blog_post.save (err,data) ->
   console.log err
 ```
 
+### Reading some posts back out, select one at random ... reload it and delete it
+
+The tool every serious tech blogger needs
+
+```coffeescript
+BlogPost.find {}, (err,blog_posts) ->
+  console.log blog_posts
+  n = Math.floor( Math.random() * blog_posts.length)
+  BlogPost.get {id:blog_posts[n].id}, (err,blog_post_to_delete) ->
+    console.log blog_post_to_delete
+    blog_post_to_delete.remove (err) ->
+       console.log 'REMOVED'
+```
 
 ## Stuff to come
 
