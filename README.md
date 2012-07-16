@@ -1,3 +1,5 @@
+![Amazon and Dynasaur](http://upload.wikimedia.org/wikipedia/commons/4/4b/Amazon_Manaus_forest.jpg)
+
 dynasaur
 ========
 
