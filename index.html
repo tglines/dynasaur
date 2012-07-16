@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dynasaur by tglines</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/tglines/dynasaur">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/tglines/dynasaur/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/tglines/dynasaur/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Dynasaur</h1>
+          <p>DynamoDB ORM for Node.js</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/tglines">tglines</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <p><img src="https://github.com/tglines/dynasaur/raw/master/dino.png" alt="Amazon and Dynasaur"></p>
+
+<h1>dynasaur</h1>
+
+<p>A DynamoDB ORM for Node.js</p>
+
+<p>It aims to provide a few added features that most people will want from a DynamoDB tool.  These things include a Mongoose inspired way of doing things, periodic S3 backups, multi-indexing (clones data to seperate tables, having different indexes on each) and more.</p>
+
+<p>For now it provides a simple way to interact with DynamoDB and create/read rows in the table.  More features coming.</p>
+
+<h2>An Example</h2>
+
+<h3>Install Dynasaur</h3>
+
+<div class="highlight">
+<pre>npm install dynasaur
+</pre>
+</div>
+
+
+<h3>Defining a Model</h3>
+
+<div class="highlight">
+<pre><span class="nv">module.exports = </span><span class="nf">(dynasaur) -&gt;</span>
+
+  <span class="nv">blog_post_schema =</span>
+    <span class="nv">attributes:</span>
+      <span class="nv">author: </span><span class="nb">String</span>
+      <span class="nv">title: </span><span class="nb">String</span>
+      <span class="nv">body: </span><span class="nb">String</span>
+      <span class="nv">date: </span><span class="nb">Number</span>
+    <span class="nv">index: </span><span class="p">[{</span><span class="nx">type</span><span class="o">:</span><span class="s">'hash'</span><span class="p">,</span><span class="nx">field</span><span class="o">:</span><span class="s">'author'</span><span class="p">},</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span><span class="s">'range'</span><span class="p">,</span><span class="nx">fields</span><span class="o">:</span><span class="p">[</span><span class="s">'title'</span><span class="p">,</span><span class="s">'date'</span><span class="p">]}]</span>
+
+  <span class="nv">BlogPost = </span><span class="nx">dynasaur</span><span class="p">.</span><span class="nx">model</span> <span class="s">'BlogPost'</span><span class="p">,</span> <span class="nx">blog_post_schema</span>
+</pre>
+</div>
+
+
+<h3>Saving the blog post</h3>
+
+<p>First make sure that the <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> shell variables are set to their respective values.</p>
+
+<div class="highlight">
+<pre><span class="nv">aws_settings = </span><span class="p">{</span>
+  <span class="nv">credentials: </span><span class="p">{</span>
+    <span class="nv">accessKeyId: </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">AWS_ACCESS_KEY_ID</span><span class="p">,</span>
+    <span class="nv">secretAccessKey: </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">AWS_SECRET_ACCESS_KEY</span>
+  <span class="p">},</span>
+  <span class="nx">region</span><span class="o">:</span><span class="s">'us-west-1'</span>
+<span class="p">}</span>
+
+<span class="nv">dynasaur = </span><span class="nx">require</span> <span class="s">'dynasaur'</span>
+
+<span class="nv">BlogPost = </span><span class="nx">require</span><span class="p">(</span><span class="s">'./models/BlogPost'</span><span class="p">)(</span><span class="nx">dynasaur</span><span class="p">)</span>
+
+<span class="nv">blog_post = </span><span class="nx">BlogPost</span><span class="p">.</span><span class="k">new</span><span class="p">()</span>
+<span class="nv">blog_post.title = </span><span class="s">'Dynasaur'</span>
+<span class="nv">blog_post.author = </span><span class="s">'Someone'</span>
+<span class="nv">blog_post.body = </span><span class="s">'Dynasaur is a DynamoDB ORM that builds some neat features on top of DynamoDB'</span>
+<span class="nv">blog_post.date = </span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">()</span>
+<span class="nx">blog_post</span><span class="p">.</span><span class="nx">save</span> <span class="nf">(err,data) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">err</span>
+</pre>
+</div>
+
+
+<h3>Reading some posts back out, select one at random ... reload it and delete it</h3>
+
+<p>The tool every serious tech blogger needs</p>
+
+<div class="highlight">
+<pre><span class="nx">BlogPost</span><span class="p">.</span><span class="nx">find</span> <span class="p">{},</span> <span class="nf">(err,blog_posts) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">blog_posts</span>
+  <span class="nv">n = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">blog_posts</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="nx">BlogPost</span><span class="p">.</span><span class="nx">get</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="nx">blog_posts</span><span class="p">[</span><span class="nx">n</span><span class="p">].</span><span class="nx">id</span><span class="p">},</span> <span class="nf">(err,blog_post_to_delete) -&gt;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">blog_post_to_delete</span>
+    <span class="nx">blog_post_to_delete</span><span class="p">.</span><span class="nx">remove</span> <span class="nf">(err) -&gt;</span>
+       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">'REMOVED'</span>
+</pre>
+</div>
+
+
+<h2>Stuff to come</h2>
+
+<ul>
+<li>Periodic (user defined time) backups to S3</li>
+<li>Multi-indexing to allow one data type to be indexed via multiple keys (we'll use DynamoDB's strong consistency and data replication here)</li>
+<li>Elastic Map Reduce (so you can run SQL like queries over the data sets you store)</li>
+</ul><h2>Shoulders it stands on</h2>
+
+<p>A big thanks go out to Jed Schmidt and other contributors for <a href="https://github.com/jed/dynamo">dynamo</a> which sits as an API abstraction for DynamoDB that made this process significantly easier.</p>
+
+<p>Another big thanks go out to all the contributors of <a href="https://github.com/LearnBoost/mongoose">mongoose</a> as it was a huge inspiration to the design of how users interact with the project.</p>
+
+<h2>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2012 Travis Glines &lt;travisglines [-&gt;] gmail.com &gt;</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
