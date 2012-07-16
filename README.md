@@ -80,6 +80,7 @@ BlogPost.find {}, (err,blog_posts) ->
 ## Stuff to come
 
 * Full test coverage
+* Better comments, docs and examples
 * Periodic (user defined time) backups to S3
 * Multi-indexing to allow one data type to be indexed via multiple keys (we'll use DynamoDB's strong consistency and data replication here)
 * Elastic Map Reduce (so you can run SQL like queries over the data sets you store)
