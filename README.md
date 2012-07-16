@@ -1,4 +1,4 @@
-![Amazon and Dynasaur](http://upload.wikimedia.org/wikipedia/commons/4/4b/Amazon_Manaus_forest.jpg)
+![Amazon and Dynasaur](https://github.com/tglines/dynasaur/raw/master/dino.png)
 
 dynasaur
 ========
