@@ -12,6 +12,12 @@ For now it provides a simple way to interact with DynamoDB and create/read rows 
 
 ## An Example
 
+### Install Dynasaur
+
+```coffeescript
+npm install dynasaur
+```
+
 ### Defining a Model
 
 
@@ -44,8 +50,7 @@ aws_settings = {
   region:'us-west-1'
 }
 
-Dynasaur = require '../../lib/Dynasaur'
-dynasaur = new Dynasaur aws_settings
+dynasaur = require 'dynasaur'
 
 BlogPost = require('./models/BlogPost')(dynasaur)
 
