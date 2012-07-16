@@ -14,7 +14,7 @@ For now it provides a simple way to interact with DynamoDB and create/read rows 
 
 ### Install Dynasaur
 
-```coffeescript
+```bash
 npm install dynasaur
 ```
 
